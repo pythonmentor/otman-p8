@@ -26,7 +26,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', '#(w6_b!(ing*b^imbx1az0lh8&nk@xdjvkvj2
 
 # SECURITY WARNING: don't run with debug turned on in production!
 if os.environ.get('ENV') == 'PRODUCTION':
-    DEBUG = False
+    DEBUG = True
 else:
     DEBUG = True
 
@@ -143,7 +143,6 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
 )
-
 
 if os.environ.get('ENV') == 'PRODUCTION':
 
