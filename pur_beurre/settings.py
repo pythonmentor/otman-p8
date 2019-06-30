@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
-import dj_database_url
+import django_heroku
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -25,10 +25,9 @@ SECRET_KEY = os.environ.get('SECRET_KEY', '#(w6_b!(ing*b^imbx1az0lh8&nk@xdjvkvj2
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = True
 if os.environ.get('ENV') == 'PRODUCTION':
     DEBUG = False
-else:
-    DEBUG = True
 
 ALLOWED_HOSTS = ['projet8-purbeurre.herokuapp.com', "127.0.0.1"]
 
@@ -55,7 +54,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'pur_beurre.urls'
@@ -135,34 +133,13 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
-STATIC_URL = '/static/'   
-
-#Development settings
-    #STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-    #STATICFILES_DIRS = (
-    #    os.path.join(BASE_DIR, "static"),
-    #)
-
-
-if os.environ.get('ENV') == 'PRODUCTION':
-    #Production settings
-    
-    PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
-
-    STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
-
-    STATICFILES_DIRS = (
-        os.path.join(PROJECT_ROOT, 'static'),
-    )
-
-    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-
-    db_from_env = dj_database_url.config(conn_max_age=500)
-    DATABASES['default'].update(db_from_env)
-
+STATIC_URL = '/static/'  
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 AUTH_USER_MODEL = 'website.User'
 
 LOGIN_REDIRECT_URL = 'index'
 
 LOGIN_URL = 'login'
+
+django_heroku.settings(locals())
