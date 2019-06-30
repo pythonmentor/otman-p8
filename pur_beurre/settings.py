@@ -30,7 +30,7 @@ if os.environ.get('ENV') == 'PRODUCTION':
 else:
     DEBUG = True
 
-ALLOWED_HOSTS = ['projet8-purbeurre.herokuapp.com']
+ALLOWED_HOSTS = ['projet8-purbeurre.herokuapp.com', "127.0.0.1"]
 
 
 # Application definition
@@ -137,15 +137,17 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-if os.environ.get('ENV') == 'PRODUCTION':
+
     
-    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-    STATICFILES_DIRS = (
-        os.path.join(BASE_DIR, "static"),
-    )
-    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, "static"),
+)
+
 
 if os.environ.get('ENV') == 'PRODUCTION':
+
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
     db_from_env = dj_database_url.config(conn_max_age=500)
     DATABASES['default'].update(db_from_env)
