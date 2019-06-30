@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block title %} Pur Beurre - Mes favoris {% endblock %}
+
+{% block content %}
+<div class="jumbotron jumbotron-fluid">
+  <div class="container-fluid">
+    <p class="text-success" style="margin-top: 80px; text-align: center">{{ text }} </br></p>
+    <p style="text-align: center"> Voici vos produits sauvegardés:</p>
+    <div class="row justify-content-around">
+      {% for fav in favorites %}
+        <div class="col-lg-4 d-flex" style="margin-top:80px">
+          <div class="row" >
+            <div class="col-12">
+              <div class="container" style="height:400px">
+                <img src="{{ fav.image_url }}" style="object-fit: cover; width: 100%; height: 100%">
+                <span id="{{sub.nutriscore}}" class="topright">{{ fav.nutriscore|upper }}</span>
+              </div>
+            </div>
+              <div class="col-12">
+                <div class=" text-center">
+                  <h4>{{ fav.name }} </h4>
+                  <div class="container justify-content-center">
+                      <a href="{% url 'product' fav.id %}" class="btn btn-primary ">Voir le produit</a>
+                      <a href="{% url 'remove' fav.id %}" class="btn btn-primary ">Retirer des favoris</a>
+                  </div>
+                </div>
+              </div>
+          </div>
+        </div>
+
+        {% empty %}
+          <p style="margin-top: 150px">Vous n'avez aucun produit sauvegardé. Effectuez d'abord une recherche, et sauvegardez le substitut qui vous intéresse pour le retrouver ici.</p>
+          
+        {% endfor %}
+    </div>
+    <div class="row justify-content-around">
+      <div class="pagination" style="margin-top: 80px">
+        <span class="step-links">
+            {% if favorites.has_previous %}
+                <a href="?page=1" class="btn btn-primary ">&laquo; 1</a>
+                <a href="?page={{ favorites.previous_page_number }}" class="btn btn-primary ">Précédent</a>
+            {% endif %}
+        
+            <span class="current">
+                Page {{ favorites.number }} sur {{ favorites.paginator.num_pages }}.
+            </span>
+        
+            {% if favorites.has_next %}
+                <a href="?page={{ favorites.next_page_number }}" class="btn btn-primary ">Suivant</a>
+                <a href="?page={{ favorites.paginator.num_pages }}" class="btn btn-primary ">{{ favorites.paginator.num_pages }} &raquo;</a>
+            {% endif %}
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

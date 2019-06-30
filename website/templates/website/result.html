@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block title %} Pur Beurre - {{product.name}} {% endblock %}
+
+
+
+{% block content %}
+<div id="product" class="jumbotron jumbotron-fluid ">
+  <div  class="container text-center ">
+    <h1 class="display-6 ">{{ product.name }}</h1>
+    <p class="lead justify-content-center">Voici le produit que vous voulez substituer. <a href="{% url 'product' product.id %}" class="btn btn-primary ">Voir le produit</a></p>
+  </div>
+</div>
+
+<div class="jumbotron jumbotron-fluid">
+  <h1>Vous pouvez remplacer cet aliment par :</h1>
+  <div class="container-fluid">
+    <div class="row justify-content-around">
+    {% for sub in substitutes %}
+      <div class="col-lg-4 d-flex" style="margin-top:80px">
+        <div class="row" >
+          <div class="col-12">
+            <div class="container" style="height:400px">
+              <img src="{{ sub.image_url }}" style="object-fit: cover; width: 100%; height: 100%">
+              <span id="{{sub.nutriscore}}" class="topright">{{ sub.nutriscore|upper }}</span>
+            </div>
+          </div>
+          <div class="col-12">
+            <div class=" text-center">
+              <h4>{{ sub.name }}</h4>
+              <div class="container justify-content-center">
+                <a href="{% url 'product' sub.id %}" class="btn btn-primary ">Voir le produit</a>
+                <a href="{% url 'save' sub.id %}" class="btn btn-primary ">Sauvegarder</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    <div class="row justify-content-around">
+        <div class="pagination" style="margin-top: 80px">
+          <span class="step-links">
+            {% if substitutes.has_previous %}
+                <a href="?search={{product.name}}&page=1" class="btn btn-primary ">&laquo; 1</a>
+                <a href="?search={{product.name}}&page={{ substitutes.previous_page_number }}" class="btn btn-primary ">Précédent</a>
+            {% endif %}
+    
+            <span class="current">
+              Page {{ substitutes.number }} sur {{ substitutes.paginator.num_pages }}.
+            </span>
+    
+            {% if substitutes.has_next %}
+                <a href="?search={{product.name}}&page={{ substitutes.next_page_number }}" class="btn btn-primary ">Suivant</a>
+                <a href="?search={{product.name}}&page={{ substitutes.paginator.num_pages }}" class="btn btn-primary ">{{ substitutes.paginator.num_pages }} &raquo;</a>
+            {% endif %}
+          </span>
+        </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+

@@ -1,0 +1,126 @@
+{% load static %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>{% block title %}Creative - Start Bootstrap Theme{% endblock %}</title>
+  <link rel="icon" href="{% static '../static/img/logo.png' %}">
+
+  <!-- Font Awesome Icons -->
+  <link href="{% static '../static/vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet" type="text/css">
+
+  <!-- Google Fonts -->
+  <link href="http://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" type="text/css">
+  <link href="http://fonts.googleapis.com/css?family=Scope+One" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Merriweather+Sans:400,700" rel="stylesheet">
+  <link href='https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic' rel='stylesheet' type='text/css'>
+
+  <!-- Plugin CSS -->
+  <link href="{% static '../static/vendor/magnific-popup/magnific-popup.css' %}" rel="stylesheet">
+
+  <!-- Theme CSS - Includes Bootstrap -->
+  <link href="{% static '../static/css/creative.css' %}" rel="stylesheet">
+
+  {% block extra_css %} 
+  <style>
+  #product:before {
+    background-image: url("{{ product.image_url}}");
+  }
+  </style>
+  {% endblock %}
+
+</head>
+
+<body id="page-top">
+
+  {% block navigation %}
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" id="mainNav">
+    <div class="container">
+      <a class="navbar-brand js-scroll-trigger" href="{% url 'index' %}">
+        <img class="img-fluid" src="{% static '../static/img/logo.png' %}" width="35" height="35">
+      </a>
+      {% if user.is_authenticated %}
+        <span id="welcome" class="navbar-brand mb-0 h1">Bonjour, {{ user.first_name }} !</span>   
+      {% endif %}
+      <a id="search-form" class="navbar-brand js-scroll-trigger mx-auto text-center w-25">
+          <form class="form-inline w-100" action="{% url 'result' %}" method="get">
+            <input class="form-control mr-sm-2" type="text" name="search" placeholder="Chercher" aria-label="Search">
+          </form> 
+      </a>
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto my-2 my-lg-0">
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" title="Mon compte" href="{% url 'account' %}">
+              <img class="img-fluid" src="{% static '../static/img/connect.png' %}" width="35" height="35">
+              <p class="collapsed-text">Mon compte</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" title="Mes produits" href="{% url 'favorites' %}">
+               <img class="img-fluid" src="{% static '../static/img/carotte.png' %}" width="35" height="35">
+               <p class="collapsed-text">Mes produits</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            {% if user.is_authenticated %}
+              <a class="nav-link js-scroll-trigger" title="Deconnexion" href="{% url 'logout' %}">
+                <img class="img-fluid" src="{% static '../static/img/logout.png' %}" width="35" height="35">
+                <p class="collapsed-text">Déconnexion</p>
+              </a>
+            {% else %}
+              <a class="nav-link js-scroll-trigger" title="Connexion" href="{% url 'login' %}">
+                <img class="img-fluid" src="{% static '../static/img/login.png' %}" width="35" height="35">
+                <p class="collapsed-text">Connexion</p>
+              </a>
+            {% endif %}
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  {% endblock %}
+
+  {% block content %}
+  {% endblock %}
+
+  {% block footer %}
+  <footer class="bg-light py-5">
+    <div class="row justify-content-around">
+      <div class="col-sm-3 text-center">
+        <div class="text-center text-muted">
+          <a href="{% url 'legal_terms' %}">Mention légales</a>
+        </div>
+      </div>
+      <div class="col-sm-3 text-center">
+        <div class="text-center text-muted">
+          <a href="{% url 'contact' %}">Contact</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+  {% endblock %}
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="{% static '../static/vendor/jquery/jquery.min.js' %}"></script>
+  <script src="{% static '../static/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+  <!-- Plugin JavaScript -->
+  <script src="{% static '../static/vendor/jquery-easing/jquery.easing.min.js' %}"></script>
+  <script src="{% static '../static/vendor/magnific-popup/jquery.magnific-popup.min.js' %}"></script>
+
+  <!-- Custom scripts for this template -->
+  <script src="{% static '../static/js/creative.min.js' %}"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% load mathfilters %}
+
+{% block title %} Pur Beurre - {{product.name}} {% endblock %}
+
+{% block content %}
+<div id="product" class="jumbotron jumbotron-fluid ">
+    <div  class="container text-center ">
+      <h1 class="display-6 ">{{ product.name }}</h1>
+    </div>
+</div>
+ 
+<div class="row justify-content-center">
+    <div class="col-lg-6 col-12 d-flex" style="margin-top:80px">
+        <img src="https://static.openfoodfacts.org/images/misc/nutriscore-{{ product.nutriscore }}.svg" style="margin:auto; width:50% !important">
+    </div>
+    <div class="col-lg-6 col-12 d-flex" style="margin-top:80px">
+            <table id="nutrition_data_table" class="data_table" style="margin:auto; width:50% !important">
+                    <thead class="nutriment_header">
+                        <tr>
+                            <th>Informations nutritionnelles</th>
+                            <th class="nutriment_value 100g">pour 100 g / 100 ml</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr id="nutriment_energy_tr" class="nutriment_main">
+                            <td class="nutriment_label">Énergie</td>
+                            <td class="nutriment_value" property="food:energyPer100g">{{ product.energy }} kj<br>({{ product.energy|intdiv:4.184 }} kcal)</td>
+                        </tr>
+                        <tr id="nutriment_fat_tr" class="nutriment_main">
+                            <td class="nutriment_label">Matières grasses / Lipides</td>
+                            <td class="nutriment_value" property="food:fatPer100g">{{ product.fat|floatformat }} g</td>
+                        </tr>
+                        <tr id="nutriment_saturated-fat_tr" class="nutriment_sub">
+                            <td class="nutriment_label">dont Acides gras saturés</td>
+                            <td class="nutriment_value" property="food:saturatedFatPer100g">{{ product.saturated_fat|floatformat }} g</td>
+                        </tr>
+                        <tr id="nutriment_carbohydrates_tr" class="nutriment_main">
+                            <td class="nutriment_label">Glucides</td>
+                            <td class="nutriment_value" property="food:carbohydratesPer100g" >{{ product.carbohydrates|floatformat }} g</td>
+                        </tr>
+                        <tr id="nutriment_sugars_tr" class="nutriment_sub">
+                            <td class="nutriment_label">dont Sucres</td>
+                            <td class="nutriment_value" property="food:sugarsPer100g" >{{ product.sugar|floatformat }} g</td>
+                        </tr>
+                        <tr id="nutriment_proteins_tr" class="nutriment_main">
+                            <td class="nutriment_label">Protéines</td>
+                            <td class="nutriment_value" property="food:proteinsPer100g">{{ product.proteins|floatformat }} g</td>
+                        </tr>
+                        <tr id="nutriment_salt_tr" class="nutriment_main">
+                            <td class="nutriment_label">Sel</td>
+                            <td class="nutriment_value" property="food:saltPer100g">{{ product.salt|floatformat }} g</td>
+                        </tr>
+                        <tr id="nutriment_sodium_tr" class="nutriment_sub">
+                            <td class="nutriment_label">Sodium</td>
+                            <td class="nutriment_value" property="food:sodiumEquivalentPer100g" >{{ product.sodium|floatformat }} g</td>
+                        </tr> 
+                    </tbody>
+                </table>       
+    </div>
+    <div class="col-8 offset-2 d-flex" style="margin-top:80px; margin-bottom:80px">
+        <span id="product_link" >
+           <a href="{{ product.url }} " target="_blank">Voir la fiche d'OpenFoodFacts</a>
+        </span>
+    </div>
+</div>
+
+{% endblock %}
+
